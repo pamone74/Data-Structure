@@ -7,9 +7,15 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
+<<<<<<< HEAD
       "externalConsole": false,
       "cwd": "/workspaces/Data-Structure/Double_linked_list",
       "program": "/workspaces/Data-Structure/Double_linked_list/build/Debug/outDebug",
+=======
+      "externalConsole": true,
+      "cwd": "c:/Users/SAIFUL/OneDrive/Documents/GitHub/Data-Structure",
+      "program": "c:/Users/SAIFUL/OneDrive/Documents/GitHub/Data-Structure/build/Debug/outDebug",
+>>>>>>> f5901e8691d34354075db709a47c65579e4673a4
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
