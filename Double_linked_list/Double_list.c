@@ -56,13 +56,15 @@ ENQ_ITEM_p_t  ENQ_add_head(ENQ_ANCHOR_p_t list, ENQ_ITEM_p_t item)
 {
     // Allocate the memory using malloc
     ENQ_ITEM_p_t mem = CDA_NEW(ENQ_ITEM_t);
+    // using an assertion to make sure that the item isnot enqueued
+    //CDA_ASSERT(!ENQ_is_item_enqed(item));
     // Check if the list is empty, if it is true, create a new list and return
     if(ENQ_is_list_empty(list))
     {
         // Since we have ENQ_ITEM_p_t item, which is a struct, we need to extract the name member. if it was char *, we would not need extraction. we could have used mem->name = item
         mem->name = item->name;
-        mem->blink = mem;
-        mem->flink = mem;
+        mem->blink = NULL;
+        mem->flink = NULL;
         list = mem;
     }
     else
@@ -71,9 +73,50 @@ ENQ_ITEM_p_t  ENQ_add_head(ENQ_ANCHOR_p_t list, ENQ_ITEM_p_t item)
         mem->name = item->name;
         list = mem;
     }
-    return (ENQ_ITEM_p_t)list;
+    return mem;
     
 }
+
+// add item to the tail of the list
+
+ENQ_ITEM_p_t ENQ_add_tail(ENQ_ANCHOR_p_t list, ENQ_ITEM_p_t item)
+{
+    ENQ_ITEM_p_t mem = CDA_NEW(ENQ_ITEM_t);
+
+    if (mem == NULL) {
+        // Handle memory allocation failure, return an error code, or exit gracefully
+        return NULL;
+    }
+
+    // Initialize the new node
+    mem->name = item->name;
+    mem->flink = NULL;
+    mem->blink = NULL;
+
+    if (ENQ_is_list_empty(list))
+    {
+        // The list is empty, so set the new node as the head
+        list->flink = mem;
+        list->blink = mem;
+    }
+    else
+    {
+        // Traverse to the end of the list
+        ENQ_ITEM_p_t current = list->flink;
+        while (current->flink != NULL)
+        {
+            current = current->flink;
+        }
+
+        // Append the new node to the end of the list
+        current->flink = mem;
+        mem->blink = current;
+        list->blink = mem;
+    }
+
+    return list;
+}
+
 int main(void)
 {
     // The test for ENQ_create_list and ENQ_create_item  is the same jut different numbers of parameters
@@ -81,10 +124,25 @@ int main(void)
     printf("%s\n",test_create_list->name);
     //Test for the ENQ_is_list_empty
     printf("%d\n", ENQ_is_list_empty(test_create_list));
-    // Testing for add-head
-    ENQ_ITEM_p_t  pp = ENQ_create_item("amone", 6);
-    ENQ_ITEM_p_t test_add_head = ENQ_add_head(test_create_list, pp);
-    printf("%s\n", test_add_head->flink->name);
+    ENQ_ITEM_p_t pp1 = ENQ_create_item("item1", 6);
+    ENQ_ITEM_p_t test_add_head1 = ENQ_add_head(test_create_list, pp1);
+
+    // Create and add another different item to the head of the list
+    ENQ_ITEM_p_t pp2 = ENQ_create_item("item2", 6);
+    test_add_head1= ENQ_add_head(test_create_list, pp2);
+    
+    ENQ_ITEM_p_t current = ENQ_add_tail(test_add_head1, test_create_list);
+    // while(current->flink->name != NULL)
+    // {
+        // printf("%s\n", current->name);
+        // current = current->flink;
+    // }
+
+    printf("%s", current->name);
+    
+    
+    
+    
 }
 
 
