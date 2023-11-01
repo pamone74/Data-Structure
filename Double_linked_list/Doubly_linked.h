@@ -26,7 +26,7 @@
 #define DOUBLY_H
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "cdap.h"
 typedef struct enq_item_s
 {
     struct enq_item_s *flink;
@@ -37,4 +37,5 @@ typedef ENQ_ITEM_t ENQ_ANCHOR_t, *ENQ_ANCHOR_p_t;
 ENQ_ITEM_p_t ENQ_create_item(const char *name, size_t size);
 ENQ_ANCHOR_p_t ENQ_create_list(const char *name);
 CDA_BOOL_t ENQ_is_item_enqed(ENQ_ITEM_p_t item);
+CDA_BOOL_t ENQ_is_list_empty(ENQ_ANCHOR_p_t list);
 #endif
