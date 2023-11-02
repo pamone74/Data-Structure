@@ -7,7 +7,7 @@ int main(SORT_UINT8_t av, char *argv[])
     // }
     int tab[10] = {1,2,3,4,5,7,8,9,0,5};
     int size = sizeof(tab) / sizeof(*(tab));
-    Buble_sort(tab, size);
+   (tab, 0,10);
     for(int i = 0; i < size; i++)
     {
         printf("%d", tab[i]);
